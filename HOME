@@ -1,0 +1,44 @@
+import React, { useState } from 'react';
+
+function Home() {
+  // Static data (replace with API later)
+  const initialRestaurants = [
+    { id: 1, name: 'Tasty Bistro', location: 'Downtown', menu: [{ name: 'Burger', price: 8.99 }] },
+    { id: 2, name: 'Spicy Haven', location: 'Uptown', menu: [{ name: 'Tacos', price: 7.49 }] },
+  ];
+
+  const [restaurants] = useState(initialRestaurants);
+  const [search, setSearch] = useState('');
+
+  const filteredRestaurants = restaurants.filter(restaurant =>
+    restaurant.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="home">
+      <h2>Welcome to Zomato Clone</h2>
+      <input
+        type="text"
+        placeholder="Search restaurants..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="search-bar"
+      />
+      <div className="restaurant-list">
+        {filteredRestaurants.map(restaurant => (
+          <div key={restaurant.id} className="restaurant-card">
+            <h3>{restaurant.name}</h3>
+            <p>{restaurant.location}</p>
+            <ul>
+              {restaurant.menu.map((item, index) => (
+                <li key={index}>{item.name} - ${item.price.toFixed(2)}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Home;
